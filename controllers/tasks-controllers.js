@@ -8,7 +8,11 @@ const getAllTasks = (req, res) => {
 };
 
 const createTask = (req, res) => {
-  res.json(req.body);
+  const { task } = req.body;
+  sql.query(`INSERT INTO tasks(task) VALUES ('${task}')`, (err, results) => {
+    if (err) throw err;
+    res.send({ message: "Value added successully" })
+  })
 };
 
 const getTask = (req, res) => {
