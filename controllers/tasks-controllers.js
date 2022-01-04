@@ -17,7 +17,6 @@ const createTask = (req, res) => {
 
 const getTask = (req, res) => {
   const { id } = req?.params;
-
   sql.query(`SELECT * FROM tasks WHERE id = ${id}`, (err, results) => {
     if (err) throw err;
     res.send({message: "Success", data: results})
@@ -25,11 +24,20 @@ const getTask = (req, res) => {
 };
 
 const updateTask = (req, res) => {
-  res.send("Update task");
+  const { task } = req.body;
+  const { id } = req.params;
+  sql.query(`UPDATE tasks SET task = "${task}" WHERE id = ${id}`, (err, results) => {
+    if (err) throw err;
+    res.send({message: "Row updated successfully!"})
+  })
 };
 
 const deleteTask = (req, res) => {
-  res.send("Delete tasks");
+  const { id } = req.params;
+  sql.query(`DELETE FROM tasks where id = ${id}`, (err, results) => {
+    if (err) throw err;
+    res.send({message: "Deleted row successfully"})
+  })
 };
 
 module.exports = { getAllTasks, createTask, getTask, updateTask, deleteTask };
