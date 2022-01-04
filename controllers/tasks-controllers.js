@@ -16,7 +16,12 @@ const createTask = (req, res) => {
 };
 
 const getTask = (req, res) => {
-  res.send("get one task");
+  const { id } = req?.params;
+
+  sql.query(`SELECT * FROM tasks WHERE id = ${id}`, (err, results) => {
+    if (err) throw err;
+    res.send({message: "Success", data: results})
+  })
 };
 
 const updateTask = (req, res) => {
